@@ -29,6 +29,7 @@ defmodule TestSW do
       sum: agg.sum - int,
       product: div(agg.product, int)
     }
+    |> IO.inspect
   end
 
   def extract_timestamp({int, timestamp}) do

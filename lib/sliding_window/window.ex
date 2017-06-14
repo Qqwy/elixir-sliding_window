@@ -13,12 +13,13 @@ defmodule SlidingWindow.Window do
     %{window | queue: new_queue, aggregate: new_aggregate}
   end
 
-  def remove_stale_items(window, behaviour_implementation, time_now) do
-    {stale_queue, still_fresh_queue} = Okasaki.Queue.take_while(window.queue, fn {timestamp, item} -> Timex.compare(timestamp,time_now) == :lt end)
+  def remove_stale_items(window, behaviour_implementation, time_threshold) do
+    {stale_queue, still_fresh_queue} = Okasaki.Queue.take_while(window.queue, fn {timestamp, item} -> Timex.compare(timestamp, time_threshold) == -1 end)
     new_aggregate = Enum.reduce(stale_queue, window.aggregate, fn {timestamp, item}, aggregate ->
       behaviour_implementation.remove_item(aggregate, item)
     end)
-    updated_struct = %{window | queue: still_fresh_queue, aggregate: new_aggregate}
+    IO.inspect({window.aggregate, new_aggregate}, label: :remove_stale_items_window)
+    updated_struct = %__MODULE__{window | queue: still_fresh_queue, aggregate: new_aggregate}
     {stale_queue, updated_struct}
   end
 
