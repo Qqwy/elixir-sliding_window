@@ -47,7 +47,7 @@ defmodule SlidingWindow do
   end
 
   defp split_while_stale(content_pairs, threshold) do
-    Enum.split_while(content_pairs, fn {timestamp, item} -> Timex.compare(timestamp, threshold) == -1 end)
+    Enum.split_while(content_pairs, fn {timestamp, _item} -> Timex.compare(timestamp, threshold) == -1 end)
   end
 
   defp drop_while_stale(content_pairs, threshold) do

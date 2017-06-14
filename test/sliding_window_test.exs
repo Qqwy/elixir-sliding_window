@@ -41,9 +41,9 @@ defmodule SlidingWindowTest do
   end
 
   def initial_data() do
-    initial_data = for int <- (100..1) do
+    for int <- (100..1) do
       time = Timex.now |> Timex.shift(seconds: -int)
-      {int, time}
+      TestSW.Transaction.new(int, time)
     end
   end
 end
