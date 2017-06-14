@@ -8,7 +8,6 @@ defmodule SlidingWindow.Window do
 
   def add_item(window, {timestamp, item}, behaviour_implementation) do
     new_queue = Okasaki.Queue.insert(window.queue, {timestamp, item})
-    IO.inspect(item, label: :add_item)
     new_aggregate = behaviour_implementation.add_item(window.aggregate, item)
     %{window | queue: new_queue, aggregate: new_aggregate}
   end
@@ -18,7 +17,6 @@ defmodule SlidingWindow.Window do
     new_aggregate = Enum.reduce(stale_queue, window.aggregate, fn {timestamp, item}, aggregate ->
       behaviour_implementation.remove_item(aggregate, item)
     end)
-    IO.inspect({window.aggregate, new_aggregate}, label: :remove_stale_items_window)
     updated_struct = %__MODULE__{window | queue: still_fresh_queue, aggregate: new_aggregate}
     {stale_queue, updated_struct}
   end

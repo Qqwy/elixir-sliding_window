@@ -69,7 +69,6 @@ defmodule SlidingWindow do
   defp shift_stale_items(_impl, _now, _window_size, _stale_items, accum, []), do: accum |> Enum.into(%{})
   defp shift_stale_items(impl, now, window_size, stale_items, accum, [{window_index, window} | windows]) do
     threshold = time_threshold(now, window_size, window_index)
-    IO.inspect({window_index, stale_items}, label: :shift_stale_items)
     updated_window = fill_window(impl, window, stale_items)
     {new_stale_items, updated_window} = Window.remove_stale_items(updated_window, impl, threshold)
     updated_accum = [{window_index, updated_window} | accum]

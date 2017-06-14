@@ -7,7 +7,6 @@ defmodule SlidingWindowTest do
       SlidingWindow.init(TestSW, 10, Timex.Duration.from_seconds(2), initial_data())
       # |> SlidingWindow.shift_stale_items()
       |> SlidingWindow.get_aggregates()
-      |> IO.inspect
 
     assert result == %{0 => %TestSW{count: 1, product: 1, sum: 1},
                        1 => %TestSW{count: 2, product: 6, sum: 5},
@@ -28,8 +27,6 @@ defmodule SlidingWindowTest do
       SlidingWindow.init(TestSW, 10, Timex.Duration.from_seconds(2), initial_data())
       |> SlidingWindow.shift_stale_items(ten_sec_future)
       |> SlidingWindow.get_aggregates()
-
-    IO.inspect(result)
 
     assert result == %{0 => %TestSW{count: 0, product: 1, sum: 0},
                        1 => %TestSW{count: 0, product: 1, sum: 0},
