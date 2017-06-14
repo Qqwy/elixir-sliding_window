@@ -9,16 +9,26 @@ defmodule TestSW do
   and an {integer, timestamp} as item type.
   """
 
+  defstruct count: 0, sum: 0, product: 1
+
   def empty_aggregate() do
-    0
+    %__MODULE__{}
   end
 
   def add_item(agg, {int, timestamp}) do
-    agg + int
+    %__MODULE__{
+      count: agg.count + 1,
+      sum: agg.sum + int,
+      product: agg.product * int
+    }
   end
 
   def remove_item(agg, {int, timestamp}) do
-    agg - int
+    %__MODULE__{
+      count: agg.count - 1,
+      sum: agg.sum - int,
+      product: div(agg.product, int)
+    }
   end
 
   def extract_timestamp({int, timestamp}) do
