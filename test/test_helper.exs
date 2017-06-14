@@ -3,12 +3,6 @@ ExUnit.start()
 defmodule TestSW do
   @behaviour SlidingWindow.Behaviour
 
-  @doc """
-  Uses a single integer as aggregate type,
-
-  and an {integer, timestamp} as item type.
-  """
-
   defmodule Transaction do
     defstruct [:value, :created_at]
     def new(value, created_at) do
