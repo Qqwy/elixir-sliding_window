@@ -31,7 +31,7 @@ defmodule SlidingWindow.Mixfile do
     [
       {:timex, "~> 3.1"},
       {:okasaki, github: "Qqwy/elixir_okasaki"},
-      {:numbers, "~> 4.0", only: [:test]},
+      {:numbers, "~> 5.1", only: [:test]},
       {:exactor, "~> 2.2", only: [:test]}
     ]
   end
